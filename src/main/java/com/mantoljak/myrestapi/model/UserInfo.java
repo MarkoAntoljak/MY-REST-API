@@ -1,28 +1,18 @@
 package com.mantoljak.myrestapi.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.lang.NonNull;
 
 import java.time.LocalDate;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 public class UserInfo {
-
-//    @Id
-//    @GeneratedValue(generator = "UUID")
-//    @GenericGenerator(
-//            name = "UUID",
-//            strategy = "org.hibernate.id.UUIDGenerator"
-//    )
-//    @NonNull
-//    private UUID id;
 
     @Id
     @GeneratedValue
@@ -34,13 +24,16 @@ public class UserInfo {
     @Past(message = "Your birthdate must be in the past.")
     private LocalDate birthDate;
 
+    @OneToMany(mappedBy = "author")
+    @JsonIgnore
+    private List<Post> posts;
+
+    protected UserInfo() {}
     public UserInfo(int id, String username, LocalDate birthDate) {
         this.id = id;
         this.username = username;
         this.birthDate = birthDate;
     }
-
-    public UserInfo() {}
 
     public int getId() {
         return id;
@@ -64,5 +57,13 @@ public class UserInfo {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

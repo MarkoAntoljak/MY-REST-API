@@ -1,6 +1,5 @@
 package com.mantoljak.myrestapi.exceptions;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ExceptionDetails {
