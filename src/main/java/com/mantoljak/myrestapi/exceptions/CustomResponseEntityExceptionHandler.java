@@ -29,7 +29,11 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        ExceptionDetails exceptionDetails = new ExceptionDetails(LocalDateTime.now(), "Error: " + ex.getFieldError().getDefaultMessage(), request.getDescription(false));
+        ExceptionDetails exceptionDetails = new ExceptionDetails(
+            LocalDateTime.now(),
+            "Error: " + ex.getFieldError().getDefaultMessage(),
+            request.getDescription(false)
+        );
         return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
 }
